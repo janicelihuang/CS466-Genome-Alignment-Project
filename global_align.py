@@ -36,15 +36,24 @@ if __name__ == "__main__":
     seq_file2 = sys.argv[2]
     sub_matrix_file = sys.argv[3]
     gap_penalty = int(sys.argv[4])
+    length = 10
 
     # read in sequences to align from fasta files 
     with open(seq_file1) as f:
-        lines = f.readlines()
-        seq1 = lines[1]
+        f.readline()
+        seq1 = ""
+        for i in range(0,1000):
+            c = f.read(1)
+            if c != '\n':
+                seq1 += c.upper()
 
     with open(seq_file2) as f:
-        lines = f.readlines()
-        seq2 = lines[1]
+        f.readline()
+        seq2 = ""
+        for i in range(0,1000):
+            c = f.read(1)
+            if c != '\n':
+                seq2 += c.upper()
     
     # read in substituion matrix from file
     with open(sub_matrix_file) as f:
@@ -69,7 +78,7 @@ if __name__ == "__main__":
     print "The optimal alignment between given sequences has score", dp_align(dp_matrix, sub_matrix, gap_penalty, len(seq1), len(seq2))
 
     # finds and prints alignment
-    a1, a2 = traceback(dp_matrix, sub_matrix, gap_penalty, len(seq1), len(seq2))
-    print a1
-    print a2
+    #a1, a2 = traceback(dp_matrix, sub_matrix, gap_penalty, len(seq1), len(seq2))
+    #print a1
+    #print a2
   

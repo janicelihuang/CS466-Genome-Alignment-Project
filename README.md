@@ -1,5 +1,6 @@
 # CS466-Genome-Alignment-Project
 
+### Introduction: ###
 One of the main uses of the sequence alignment technique is to construct phylogenetic trees,
 which depicts the evolutionary relationships between different species. The amount two
 sequences differ is related to the evolutionary distance between two species. This is because a
@@ -11,6 +12,10 @@ higher score and be better aligned, as a cat and tiger likely have a more recent
 than a dog and a tiger and are also in a common family (Felidae). To do this, we will implement
 the dynamic programming global alignment strategy and optimize it to work on larger datasets.
 
-Todo:
-dp recursive -> memo iter
-change backtracking
+### Todo: ###
+* run on whole file somehow
+
+### Findings: ###
+* Fasta file contains N for broken nucleotides (currently ignoring these, setting penalty to 0)
+* Fasta file contains new lines 
+* Fasta file, is big
