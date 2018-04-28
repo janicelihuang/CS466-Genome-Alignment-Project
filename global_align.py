@@ -1,4 +1,3 @@
-# jlhuang2 CS 466 HW3 Problem 1
 import sys         # for reading args from command line 
 
 # retrieve needed filenames and gap-penalty from the commandline args
@@ -56,28 +55,31 @@ def dp_align(idx1, idx2):
     dp_matrix[idx1][idx2] = optimal
     return dp_matrix[idx1][idx2] 
 
+def traceback(idx1, idx2):
+    alignment1 = ""
+    alignment2 = ""
+    while idx1 > 0 or idx2 > 0:
+        val = dp_matrix[idx1][idx2]
+        if idx1-1 >= 0 and idx2-1 >= 0 and (not dp_matrix[idx1-1][idx2-1] == None) and val == dp_matrix[idx1-1][idx2-1] + sub_matrix[seq1[idx1-1]][seq2[idx2-1]]:
+            alignment1 = str(seq1[idx1-1]) + alignment1
+            alignment2 = str(seq2[idx2-1]) + alignment2
+            idx2 -= 1
+            idx1 -= 1
+        elif idx1-1 >= 0 and (not dp_matrix[idx1-1][idx2] == None) and val == dp_matrix[idx1-1][idx2] + gap_penalty:
+            alignment1 = str(seq1[idx1-1]) + alignment1
+            alignment2 = "-" + alignment2
+            idx1 -= 1 
+        elif idx2-1 >= 0 and (not dp_matrix[idx1][idx2-1] == None) and val == dp_matrix[idx1][idx2-1] + gap_penalty:
+            alignment2 = str(seq2[idx2-1]) + alignment2
+            alignment1 = "-" + alignment1
+            idx2 -= 1
+    return alignment1, alignment2
+    
+
+
 print "The optimal alignment between given sequences has score", dp_align(len(seq1), len(seq2))
 # finds alignment for printing
-alignment1 = ""
-alignment2 = ""
-idx1 = len(seq1)
-idx2 = len(seq2)
-while idx1 >= 0 and idx2 >= 0:
-    if idx1 == 0 and idx2 == 0:
-        break
-    next1 = temp_matrix[idx1][idx2][0]
-    next2 = temp_matrix[idx1][idx2][1]
-    if next1 < idx1 and next2 < idx2:
-        alignment1 = seq1[idx1-1] + alignment1 
-        alignment2 = seq2[idx2-1] + alignment2 
-    elif next1 < idx1:
-        alignment1 = seq1[idx1-1] + alignment1 
-        alignment2 = "-" + alignment2 
-    elif next2 < idx2: 
-        alignment1 = "-" + alignment1 
-        alignment2 = seq2[idx2-1] + alignment2 
-    idx1 = next1
-    idx2 = next2
-print alignment1
-print alignment2
+a1, a2 = traceback(len(seq1), len(seq2))
+print a1
+print a2
   
