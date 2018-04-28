@@ -36,24 +36,16 @@ for i in range(1, len(seq2)+1):
 
 for i in range(1, len(seq1)+1):
     dp_matrix[i][0] = dp_matrix[i-1][0] + gap_penalty
-    temp_matrix[i][0] = (i-1, 0)
 
 # fills in dp matrix and finds score
 def dp_align(idx1, idx2): 
-    if dp_matrix[idx1][idx2] != None:
-        return dp_matrix[idx1][idx2]
-    gap1 = dp_align(idx1-1, idx2) + gap_penalty
-    gap2 = dp_align(idx1, idx2-1) + gap_penalty
-    match = dp_align(idx1-1, idx2-1) + sub_matrix[seq1[idx1-1]][seq2[idx2-1]]
-    optimal = max(gap1, gap2, match)
-    if optimal == gap1:
-        temp_matrix[idx1][idx2] = (idx1-1, idx2)
-    if optimal == gap2:
-        temp_matrix[idx1][idx2] = (idx1, idx2-1)
-    if optimal == match:
-        temp_matrix[idx1][idx2] = (idx1-1, idx2-1)
-    dp_matrix[idx1][idx2] = optimal
-    return dp_matrix[idx1][idx2] 
+    for i in range (1,idx1+1):
+        for j in range (1,idx2+1):
+            match = dp_matrix[i-1][j-1] + sub_matrix[seq1[i-1]][seq2[j-1]]
+            gap1 = dp_matrix[i-1][j] + gap_penalty
+            gap2 = dp_matrix[i][j-1] + gap_penalty
+            dp_matrix[i][j] = max(match,gap1,gap2)
+    return dp_matrix[idx1][idx2]
 
 def traceback(idx1, idx2):
     alignment1 = ""
@@ -74,8 +66,6 @@ def traceback(idx1, idx2):
             alignment1 = "-" + alignment1
             idx2 -= 1
     return alignment1, alignment2
-    
-
 
 print "The optimal alignment between given sequences has score", dp_align(len(seq1), len(seq2))
 # finds alignment for printing
