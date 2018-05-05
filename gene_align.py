@@ -48,18 +48,6 @@ def read_sequences(seq_file1, seq_file2):
                  seq1 += line.strip()
             for line in f2:
                 seq2 += line.strip()
-            #i = 0
-            #length = 10000
-            #while i < length:
-            #    c1 = f1.read(1)
-            #    c2 = f2.read(1)
-             #   if c1 == '' or c2 == '':
-             #       i = length
-             #   if c1.upper() == "A" or c1.upper() == "C" or c1.upper() == "T" or c1.upper() == "G":
-              #      if c2.upper() == "A" or c2.upper() == "C" or c2.upper() == "T" or c2.upper() == "G":
-              #          i+=1
-               #         seq1 += c1.upper()
-               #         seq2 += c2.upper()
     return seq1, seq2
  
 # create initial dynamic programming matrix 
